@@ -3,13 +3,19 @@ from PyPDF2 import PdfReader
 from pinecone_setup import get_embedding, index
 from dotenv import load_dotenv
 
+# Load environment variables
 load_dotenv()
-filepath ="C:\chatbot\data\NIPS-2017-attention-is-all-you-need-Paper.pdf"
+
+# Fix: Use raw string or escape backslashes in file path
+filepath = r"C:\chatbot\data\NIPS-2017-attention-is-all-you-need-Paper.pdf"
+
 def extract_text_from_pdf(file_path):
     reader = PdfReader(file_path)
     text = ""
     for page in reader.pages:
-        text += page.extract_text() + "\n"
+        page_text = page.extract_text()
+        if page_text:  # Fix: Handle NoneType in case a page has no text
+            text += page_text + "\n"
     return text
 
 def chunk_text(text, chunk_size=500):
@@ -18,7 +24,13 @@ def chunk_text(text, chunk_size=500):
 
 def ingest_pdf(file_path):
     text = extract_text_from_pdf(file_path)
+    if not text.strip():
+        raise ValueError("No text extracted from the PDF.")
     chunks = chunk_text(text)
     for i, chunk in enumerate(chunks):
         embedding = get_embedding(chunk)
         index.upsert([(f"pdf-{i}", embedding, {"text": chunk})])
+
+# Call it (optionally)
+if __name__ == "__main__":
+    ingest_pdf(filepath)
