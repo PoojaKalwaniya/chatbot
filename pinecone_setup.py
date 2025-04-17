@@ -8,8 +8,8 @@ load_dotenv()
 
 # Initialize Pinecone
 pinecone_api_key = os.getenv("PINECONE_API_KEY")
-pinecone_env = os.getenv("PINECONE_ENVIRONMENT")
-index_name = os.getenv("PINECONE_INDEX_NAME")
+pinecone_env = os.getenv("PINECONE_ENVIRONMENT","gcp-starter")
+index_name = os.getenv("PINECONE_INDEX_NAME","chatbotindex")
 
 pinecone.init(api_key=pinecone_api_key, environment=pinecone_env)
 
