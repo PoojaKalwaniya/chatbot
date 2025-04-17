@@ -15,7 +15,7 @@ pinecone.init(api_key=pinecone_api_key, environment=pinecone_env)
 
 # Create index if it doesn't exist
 if index_name not in pinecone.list_indexes():
-    pinecone.create_index(index_name, dimension=1536)
+    pinecone.create_index(index_name, dimension=1536, metric="cosine")
 
 # Connect to the index
 index = pinecone.Index(index_name)

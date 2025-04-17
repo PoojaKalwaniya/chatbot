@@ -10,9 +10,9 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/public/index.html"
+      "dest": "/index.html"
     }
   ],
-  "cleanUrls": true,
+  "cleanUrls": true, 
   "trailingSlash": false
 }

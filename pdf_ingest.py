@@ -31,6 +31,4 @@ def ingest_pdf(file_path):
         embedding = get_embedding(chunk)
         index.upsert([(f"pdf-{i}", embedding, {"text": chunk})])
 
-# Call it (optionally)
-if __name__ == "__main__":
-    ingest_pdf(filepath)
+
