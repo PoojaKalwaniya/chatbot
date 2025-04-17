@@ -1,6 +1,18 @@
 {
-    "rewrites": [{ "source": "/api/(.*)", "destination": "/api/index.py" }],
-    "cleanUrls": true,
-    "trailingSlash": false
-  }
-  
+  "builds": [
+    { "src": "api/index.py", "use": "@vercel/python" }
+  ],
+  "routes": [
+    {
+      "src": "/api/chat",
+      "methods": ["POST"],
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/index.html"
+    }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
+}
