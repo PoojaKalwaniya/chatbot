@@ -1,7 +1,10 @@
 {
-  "builds": [{ "src": "api/chat.py", "use": "@vercel/python" }],
-  "routes": [
-    { "src": "/api/chat", "methods": ["POST"], "dest": "/api/chat.py" },
-    { "src": "/(.*)", "dest": "/public/index.html" }
-  ]
-}
+    "rewrites": [{ "source": "/api/(.*)", "destination": "/api/index.py" }],
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "routes": [
+      { "src": "/api/chat", "methods": ["POST"], "dest": "/api/index.py" },
+      { "src": "/(.*)", "dest": "/public/index.html" }
+    ]
+  }
+  
