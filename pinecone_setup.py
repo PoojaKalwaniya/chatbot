@@ -1,6 +1,6 @@
 import os
 import pinecone
-from openai import OpenAIEmbeddings
+from openai import OpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -13,13 +13,8 @@ if index_name not in pinecone.list_indexes():
 
 index = pinecone.Index(index_name)
 
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
 def get_embedding(text):
-    from openai import OpenAI
-    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     response = client.embeddings.create(input=[text], model="text-embedding-ada-002")
     return response.data[0].embedding
-
-def index_documents(docs):
-    for i, doc in enumerate(docs):
-        embedding = get_embedding(doc)
-        index.upsert([(f"doc-{i}", embedding, {"text": doc})])
